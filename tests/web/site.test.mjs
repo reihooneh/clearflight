@@ -163,7 +163,7 @@ test('explore: inspect a pane, switch sites, and refuse hostile files', async ()
   const { page, context, errors } = await open('explore.html');
   assert.ok((await page.locator('#facades tbody tr').count()) >= 4);
   await page.click('#top tbody tr:first-child button');
-  assert.match(await page.textContent('#pane-hint'), /Library, (south|north) facade/);
+  assert.match(await page.textContent('#pane-hint'), /^Library, (north|east|south|west) facade, /);
   assert.match(await page.textContent('#pane-info'), /Strikes a year/);
   assert.equal(await page.locator('#pane-seen .bar-row').count(), 4);
   assert.deepEqual(await textOverlaps(page), []);
