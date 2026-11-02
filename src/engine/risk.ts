@@ -280,7 +280,7 @@ export function simulate(scene: Scene, sampleSize = 80): RiskResult {
         flight = { ...flight, pane: pane.id, chance: chance * MARKER_FACTOR[pane.treated] };
       }
     }
-    if (sample.length < sampleSize && (flight.pane >= 0 || f % 7 === 0)) sample.push(flight);
+    if (sample.length < sampleSize && f % 41 === 0) sample.push(flight); // an even sample, not just the strikes
   }
   const perFlight = (scene.flightsPerDay * 365) / scene.flights;
   for (const pr of risk) {
