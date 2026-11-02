@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; worker-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Clearflight: find the windows birds fly into</title>
+  <meta name="description" content="Clearflight traces thousands of bird flights across a site, works out what every pane of glass reflects, and chooses the window markers that save the most birds for a budget.">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script type="module" src="assets/js/web/home.js"></script>
+</head>
+<body class="page-index">
+  <a class="skip" href="#main">Skip to the content</a>
+  <header class="top">
+    <div class="top-inner">
+      <a class="mark" href="index.html" aria-label="Clearflight home">
+        <svg class="mark-icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="17" y="4" width="11" height="24" rx="1.5"/><path d="M3 19c4-5 8-6 12-4l-3 3 5 1"/></svg>
+        <span>Clearflight</span>
+      </a>
+      <nav class="nav" aria-label="Pages">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="explore.html">Explore a site</a>
+        <a href="plan.html">Plan treatments</a>
+        <a href="method.html">How it works</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">Bird-safe glass, planned</p>
+        <h1>Find the windows birds fly into, before they do.</h1>
+        <p class="lede">Glass that reflects trees and sky looks like open air to a bird. Clearflight simulates thousands of flights across a site, works out what every pane shows the birds that meet it, and predicts which windows will cause strikes. Then it chooses the markers that prevent the most strikes for your budget.</p>
+        <div class="actions">
+          <a class="button primary" href="explore.html">Explore a site</a>
+          <a class="button" href="plan.html">Plan treatments</a>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <div id="hero-view" class="view" aria-label="3D view of the Riverside Library, its glass coloured by strike risk"></div>
+        <figcaption>
+          <span class="key">Low risk <span class="legend-bar" aria-hidden="true"></span> High risk</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="facts" aria-label="What the model found at the Riverside Library">
+      <div class="fact"><p class="fact-n" id="fact-year">…</p><p class="fact-t">strikes a year predicted at the Riverside Library</p></div>
+      <div class="fact"><p class="fact-n" id="fact-face">…</p><p class="fact-t" id="fact-face-label">of them on its worst facade</p></div>
+      <div class="fact"><p class="fact-n" id="fact-plan">…</p><p class="fact-t" id="fact-plan-label">prevents half the strikes when the planner places the markers</p></div>
+      <div class="fact"><p class="fact-n" id="fact-guide">…</p><p class="fact-t">to treat all glass below 16 m, as guidelines ask</p></div>
+    </section>
+    <p id="home-status" class="status" role="status">Simulating flights…</p>
+
+    <section class="band">
+      <h2>Why birds fly into glass</h2>
+      <div class="cards">
+        <article class="card">
+          <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="6" width="22" height="36" rx="2"/><circle cx="19" cy="20" r="7"/><path d="M19 27v9"/></svg>
+          <h3>Reflections</h3>
+          <p>Glass reflects more as you meet it at a slant. A pane that mirrors a tree or the sky shows a bird a place to fly to.</p>
+        </article>
+        <article class="card">
+          <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="10" width="14" height="28" rx="2"/><rect x="28" y="10" width="14" height="28" rx="2"/><path d="M2 24h44"/></svg>
+          <h3>See-through spaces</h3>
+          <p>Glass lobbies and glass corners let a bird see daylight and trees on the far side, so it looks like a gap to fly through.</p>
+        </article>
+        <article class="card">
+          <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 30c8-10 18-12 26-6"/><path d="M28 18l6 6-8 2"/><rect x="38" y="8" width="4" height="32" rx="1"/></svg>
+          <h3>Where birds fly</h3>
+          <p>Most strikes happen low, near trees, where birds move between crowns. A head-on approach is worse than a glancing one.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="band alt">
+      <h2>From a sketch of the site to a work order</h2>
+      <ol class="steps">
+        <li><h3>Describe the site</h3><p>Buildings, how much of each facade is glass and what kind, see-through floors, and the trees around them.</p></li>
+        <li><h3>Simulate the flights</h3><p>Birds fly between tree crowns and across the site. At every pane they meet, the model traces the reflection and the view through the glass.</p></li>
+        <li><h3>Choose the markers</h3><p>For any budget, an exact optimiser picks interior or exterior markers pane by pane, allowing for setup visits and lifts.</p></li>
+      </ol>
+    </section>
+  </main>
+  <footer class="foot">
+    <div class="foot-inner">
+      <p>Clearflight is open source (MIT). It runs entirely in your browser: no sign-in, no tracking, and scene files you load never leave your device.</p>
+      <p><a href="https://github.com/reihooneh/clearflight">Source code and tests on GitHub</a></p>
+    </div>
+  </footer>
+</body>
+</html>

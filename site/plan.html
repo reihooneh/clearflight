@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; worker-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Plan treatments · Clearflight</title>
+  <meta name="description" content="Choose the window markers that prevent the most bird strikes for a budget, with setup visits and lifts costed in.">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script type="module" src="assets/js/web/plan.js"></script>
+</head>
+<body class="page-plan">
+  <a class="skip" href="#main">Skip to the content</a>
+  <header class="top">
+    <div class="top-inner">
+      <a class="mark" href="index.html" aria-label="Clearflight home">
+        <svg class="mark-icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="17" y="4" width="11" height="24" rx="1.5"/><path d="M3 19c4-5 8-6 12-4l-3 3 5 1"/></svg>
+        <span>Clearflight</span>
+      </a>
+      <nav class="nav" aria-label="Pages">
+        <a href="index.html">Home</a>
+        <a href="explore.html">Explore a site</a>
+        <a href="plan.html" aria-current="page">Plan treatments</a>
+        <a href="method.html">How it works</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-head">
+      <h1>Plan treatments</h1>
+      <p class="lede">Markers on glass make it visible to birds: exterior markers cut a pane's strikes by about 90%, and cheaper interior ones by about 60%. Set a budget and the planner chooses, pane by pane, the treatments that prevent the most strikes. It counts a setup visit for each facade it touches and a lift for exterior work above the ground floor.</p>
+    </section>
+
+    <section class="toolbar" aria-label="Site and budget">
+      <label class="field">Example site
+        <select id="site">
+          <option value="riverside-library">Riverside Library</option>
+          <option value="glass-tower">Glass Corner Tower</option>
+          <option value="garden-house">Garden House</option>
+        </select>
+      </label>
+      <label class="field">Or load your own scene (JSON)
+        <input type="file" id="file" accept=".json,application/json">
+      </label>
+      <label class="field budget">Budget <output id="budget-out" for="budget">$20,000</output>
+        <input type="range" id="budget" min="0" max="40000" step="250" value="20000">
+      </label>
+    </section>
+    <p id="status" class="status" role="status">Simulating flights…</p>
+    <p id="form-error" class="error" role="alert" hidden></p>
+
+    <div class="plan-grid">
+      <section class="panel" aria-labelledby="plan-title">
+        <h2 id="plan-title">The plan</h2>
+        <div class="kpis">
+          <div class="kpi"><p class="kpi-n" id="kpi-saved">…</p><p class="kpi-t">strikes a year prevented</p></div>
+          <div class="kpi"><p class="kpi-n" id="kpi-share">…</p><p class="kpi-t">of the site's strikes</p></div>
+          <div class="kpi"><p class="kpi-n" id="kpi-cost">…</p><p class="kpi-t">spent of the budget</p></div>
+          <div class="kpi"><p class="kpi-n" id="kpi-area">…</p><p class="kpi-t">of glass treated</p></div>
+        </div>
+        <ul id="compare" class="compare"></ul>
+      </section>
+      <figure class="panel view-panel">
+        <div id="view" class="view" aria-label="3D view of the site with the planned treatments"></div>
+        <figcaption>
+          <span class="key"><span class="swatch exterior" aria-hidden="true"></span>Exterior markers</span>
+          <span class="key"><span class="swatch interior" aria-hidden="true"></span>Interior markers</span>
+          <span class="key"><span class="swatch none" aria-hidden="true"></span>Left as it is</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <section class="panel chart">
+      <h2>What every budget buys</h2>
+      <div id="frontier" class="chart-box" aria-label="Chart of strikes prevented against budget"></div>
+      <p class="muted">The line is the best possible plan at each budget. It rises in steps because each new facade needs a setup visit before any of its glass can be treated.</p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Work order</h2>
+        <button type="button" class="button" id="csv">Download the work order (CSV)</button>
+      </div>
+      <div class="table-wrap"><table id="orders"><caption class="visually-hidden">Treatments by facade</caption></table></div>
+    </section>
+  </main>
+  <footer class="foot">
+    <div class="foot-inner">
+      <p>Clearflight is open source (MIT). It runs entirely in your browser: no sign-in, no tracking, and scene files you load never leave your device.</p>
+      <p><a href="https://github.com/reihooneh/clearflight">Source code and tests on GitHub</a></p>
+    </div>
+  </footer>
+</body>
+</html>

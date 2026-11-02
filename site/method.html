@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; worker-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>How it works · Clearflight</title>
+  <meta name="description" content="The model behind Clearflight: Fresnel reflections, simulated flights, see-through glass and an exact treatment planner, with live checks.">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script type="module" src="assets/js/web/method.js"></script>
+</head>
+<body class="page-method">
+  <a class="skip" href="#main">Skip to the content</a>
+  <header class="top">
+    <div class="top-inner">
+      <a class="mark" href="index.html" aria-label="Clearflight home">
+        <svg class="mark-icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="17" y="4" width="11" height="24" rx="1.5"/><path d="M3 19c4-5 8-6 12-4l-3 3 5 1"/></svg>
+        <span>Clearflight</span>
+      </a>
+      <nav class="nav" aria-label="Pages">
+        <a href="index.html">Home</a>
+        <a href="explore.html">Explore a site</a>
+        <a href="plan.html">Plan treatments</a>
+        <a href="method.html" aria-current="page">How it works</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-head">
+      <h1>How it works</h1>
+      <p class="lede">Clearflight is a model, not a census of dead birds. It follows what field studies agree on: reflections of vegetation and sky cause most daytime strikes, see-through glass is a trap, and most strikes happen low, near trees. Here is each step, with checks you can watch run in your browser.</p>
+    </section>
+
+    <section class="panel prose">
+      <h2>1. Simulate the flights</h2>
+      <p>Birds fly in straight lines between points inside tree crowns, chosen in proportion to each crown's size, and across the site from its edges. Twenty thousand flights are simulated, with a fixed random seed so every run gives the same answer. A flight that reaches a wall turns away. A flight that reaches glass meets a pane.</p>
+      <figure class="figure diagram">
+        <svg viewBox="0 0 640 260" role="img" aria-labelledby="d1-title">
+          <title id="d1-title">A bird flying from a tree meets a pane; the pane reflects another tree back at it</title>
+          <rect class="d-ground" x="0" y="226" width="640" height="34"/>
+          <rect class="d-building" x="380" y="70" width="170" height="156"/>
+          <rect class="d-glass" x="372" y="100" width="8" height="90"/>
+          <circle class="d-crown" cx="90" cy="110" r="44"/>
+          <rect class="d-trunk" x="86" y="150" width="8" height="76"/>
+          <circle class="d-crown" cx="250" cy="60" r="34"/>
+          <rect class="d-trunk" x="246" y="92" width="8" height="134"/>
+          <path class="d-flight" d="M120 128 L372 150"/>
+          <path class="d-reflect" d="M372 150 L276 76"/>
+          <path class="d-normal" d="M372 150 L322 150"/>
+          <text class="d-label" x="120" y="200">bird's flight</text>
+          <text class="d-label" x="270" y="24">what the pane reflects</text>
+          <text class="d-label" x="430" y="60">building</text>
+          <text class="d-label" x="300" y="176">pane</text>
+        </svg>
+      </figure>
+    </section>
+
+    <section class="panel prose">
+      <h2>2. What does the pane look like?</h2>
+      <p>At the pane the model traces two rays. The mirror ray finds what the glass reflects: a tree crown, sky, ground or another building. The straight-on ray finds what shows through. That's usually a dark room, but on floors marked as see-through (a glass lobby or a glass corner) the ray carries on out of the far side. Each thing has an "openness" (trees 1.0, sky 0.7, ground 0.4, buildings 0.2, a dark room 0.1). The pane looks as open as</p>
+      <p class="equation">open = R(θ) × reflected + (1 − R(θ)) × τ × seen through</p>
+      <p>Here τ is how much light the glass lets through, and R(θ) is the glass's reflectance at the angle the bird arrives (Schlick's approximation to the Fresnel equations). Reflectance climbs steeply at glancing angles, and mirror glass reflects strongly even head-on:</p>
+      <figure class="figure chart"><div id="fresnel" class="chart-box"></div><figcaption class="muted">Reflectance against the angle from head-on, computed live by the engine.</figcaption></figure>
+      <p>The chance of a strike is the pane's openness, scaled up for head-on approaches (a glancing bird can veer away) and down by markers already on the glass. A single calibration factor puts the totals in the range field studies report: a few strikes a year for a house, and tens for a low-rise beside trees.</p>
+    </section>
+
+    <section class="panel prose">
+      <h2>3. Choose the treatments exactly</h2>
+      <p>Ranking panes by risk per dollar and working down the list sounds sensible, but it ignores fixed costs. The first pane on a facade brings a setup visit, and the first exterior pane above the ground floor brings a lift. The planner handles this in two exact stages, in $50 steps:</p>
+      <ol>
+        <li><strong>Inside each facade</strong>, a knapsack over its panes (each: nothing, interior or exterior) with two states, lift paid or not, gives the best saving for every amount spent there.</li>
+        <li><strong>Across facades</strong>, those curves are combined (a max-plus convolution), so one table answers every budget at once. That's why the budget slider is instant.</li>
+      </ol>
+      <p>The tests check the planner against every possible combination of treatments on small buildings. Below, the planner and the riskiest-first rule are compared live on the three example sites at $5,000:</p>
+      <div class="table-wrap"><table id="checks"><caption class="visually-hidden">Planner compared with the riskiest-first rule</caption></table></div>
+      <p id="checks-status" class="status" role="status">Running the checks…</p>
+    </section>
+
+    <section class="panel prose">
+      <h2>Limits, honestly</h2>
+      <ul>
+        <li>Birds don't fly in straight lines, and real collision rates depend on species, season and migration routes. Read the yearly numbers as an estimate; the ranking of panes and the comparison of plans are what the model is best at.</li>
+        <li>Night-time strikes from lit windows during migration aren't modelled yet. Turning lights off at night matters as much as markers.</li>
+        <li>Buildings are boxes with ribbon windows, and trees are spheres on trunks. That's enough to show reflections and fly-throughs, but not a balcony railing or a planter behind glass.</li>
+      </ul>
+    </section>
+  </main>
+  <footer class="foot">
+    <div class="foot-inner">
+      <p>Clearflight is open source (MIT). It runs entirely in your browser: no sign-in, no tracking, and scene files you load never leave your device.</p>
+      <p><a href="https://github.com/reihooneh/clearflight">Source code and tests on GitHub</a></p>
+    </div>
+  </footer>
+</body>
+</html>
