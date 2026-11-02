@@ -243,3 +243,23 @@ test('the static server refuses paths outside the site', async () => {
     assert.notEqual(res.status, 200, p);
   }
 });
+
+test('built pages: strict CSP, no inline code, nothing loaded from other sites, no HTML from strings', () => {
+  const dir = new URL('../../site/', import.meta.url);
+  for (const f of readdirSync(dir).filter((x) => x.endsWith('.html'))) {
+    const html = readFileSync(new URL(f, dir), 'utf8');
+    assert.match(html, /Content-Security-Policy" content="default-src 'none'; script-src 'self';/, f);
+    assert.doesNotMatch(html, /'unsafe-inline'|'unsafe-eval'/, f);
+    assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>/, `${f} has an inline script`);
+    assert.doesNotMatch(html, /\sstyle=|<style|\son[a-z]+=/i, `${f} has inline styles or handlers`);
+    const external = [...html.matchAll(/(?:src|href)="(https?:[^"]+)"/g)].map((m) => m[1]);
+    for (const url of external) assert.ok(/^https:\/\/github\.com\/reihooneh\//.test(url), `${f} links ${url}`);
+  }
+  for (const sub of ['engine', 'web']) {
+    for (const f of readdirSync(new URL(`assets/js/${sub}/`, dir))) {
+      const js = readFileSync(new URL(`assets/js/${sub}/${f}`, dir), 'utf8');
+      assert.doesNotMatch(js, /innerHTML|outerHTML|insertAdjacentHTML|document\.write|\beval\(|new Function/, `${f} builds HTML or code from strings`);
+      assert.doesNotMatch(js, /from 'three'/, `${f} still has a bare import`);
+    }
+  }
+});
