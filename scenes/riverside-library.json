@@ -1,0 +1,43 @@
+{
+  "name": "Riverside Library",
+  "width": 90,
+  "depth": 70,
+  "flightsPerDay": 600,
+  "flights": 20000,
+  "seed": 7,
+  "buildings": [
+    {
+      "name": "Library",
+      "x": 25, "y": 28, "width": 36, "depth": 20,
+      "floors": 3, "floorHeight": 4.2,
+      "seeThrough": [1],
+      "all": { "glazing": 0.55, "glass": "clear" },
+      "facades": {
+        "south": { "glazing": 0.9, "glass": "clear" },
+        "north": { "glazing": 0.9, "glass": "clear" },
+        "east": { "glazing": 0.4, "glass": "low-e" }
+      }
+    },
+    {
+      "name": "Cafe",
+      "x": 68, "y": 30, "width": 12, "depth": 10,
+      "floors": 1, "floorHeight": 3.6,
+      "all": { "glazing": 0.75, "glass": "clear" },
+      "facades": { "north": { "glazing": 0.2, "glass": "clear", "treated": "interior" } }
+    }
+  ],
+  "trees": [
+    { "x": 8, "y": 10, "height": 15, "crown": 5 },
+    { "x": 20, "y": 8, "height": 13, "crown": 4.5 },
+    { "x": 33, "y": 9, "height": 16, "crown": 5.5 },
+    { "x": 47, "y": 7, "height": 14, "crown": 5 },
+    { "x": 60, "y": 10, "height": 15, "crown": 5 },
+    { "x": 74, "y": 8, "height": 12, "crown": 4 },
+    { "x": 85, "y": 14, "height": 11, "crown": 3.5 },
+    { "x": 12, "y": 40, "height": 10, "crown": 3.5 },
+    { "x": 14, "y": 58, "height": 12, "crown": 4 },
+    { "x": 43, "y": 62, "height": 9, "crown": 3 },
+    { "x": 70, "y": 60, "height": 11, "crown": 4 },
+    { "x": 84, "y": 50, "height": 8, "crown": 3 }
+  ]
+}

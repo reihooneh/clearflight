@@ -1,0 +1,25 @@
+{
+  "name": "Garden House",
+  "width": 40,
+  "depth": 36,
+  "flightsPerDay": 300,
+  "flights": 20000,
+  "seed": 3,
+  "buildings": [
+    {
+      "name": "House",
+      "x": 12, "y": 14, "width": 14, "depth": 10,
+      "floors": 2, "floorHeight": 3,
+      "seeThrough": [1],
+      "all": { "glazing": 0.35, "glass": "clear" },
+      "facades": { "south": { "glazing": 0.85, "glass": "clear" } }
+    }
+  ],
+  "trees": [
+    { "x": 6, "y": 5, "height": 9, "crown": 3.5 },
+    { "x": 19, "y": 4, "height": 6, "crown": 2.5 },
+    { "x": 33, "y": 6, "height": 8, "crown": 3 },
+    { "x": 34, "y": 28, "height": 10, "crown": 3.5 },
+    { "x": 5, "y": 30, "height": 7, "crown": 2.5 }
+  ]
+}
