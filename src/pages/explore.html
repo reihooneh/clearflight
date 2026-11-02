@@ -1,0 +1,48 @@
+<!--{"title":"Explore a site · Clearflight","description":"See every pane of glass coloured by its predicted bird strikes, the flights that meet it, and what it reflects.","nav":"explore","script":"web/explore.js"}-->
+    <section class="page-head">
+      <h1>Explore a site</h1>
+      <p class="lede">Every pane is coloured by its predicted strikes per square metre. Click a pane to see what it shows the birds that meet it. Drag to turn the site, and scroll or pinch to zoom.</p>
+    </section>
+
+    <section class="toolbar" aria-label="Choose a site">
+      <label class="field">Example site
+        <select id="site">
+          <option value="riverside-library">Riverside Library</option>
+          <option value="glass-tower">Glass Corner Tower</option>
+          <option value="garden-house">Garden House</option>
+        </select>
+      </label>
+      <label class="field">Or load your own scene (JSON)
+        <input type="file" id="file" accept=".json,application/json">
+      </label>
+      <label class="check"><input type="checkbox" id="flights" checked> Show sample flights</label>
+      <a class="button" id="example" href="assets/scenes/riverside-library.json" download="riverside-library.json">Download this scene</a>
+    </section>
+    <p id="status" class="status" role="status">Simulating flights…</p>
+    <p id="form-error" class="error" role="alert" hidden></p>
+
+    <div class="explore-grid">
+      <figure class="panel view-panel">
+        <div id="view" class="view" aria-label="3D view of the site. Click a pane to inspect it."></div>
+        <figcaption>
+          <span class="key">Low risk <span class="legend-bar" aria-hidden="true"></span> High risk</span>
+          <span class="key"><span class="legend-line" aria-hidden="true"></span>Flight that meets glass</span>
+        </figcaption>
+      </figure>
+      <aside class="panel pane-panel" aria-labelledby="pane-title">
+        <h2 id="pane-title">Pane</h2>
+        <p id="pane-hint" class="muted">Click a pane in the 3D view, or pick one from the riskiest panes below.</p>
+        <dl id="pane-info" class="facts-list"></dl>
+        <div id="pane-seen"></div>
+      </aside>
+    </div>
+
+    <section class="panel">
+      <h2>By facade</h2>
+      <div class="table-wrap"><table id="facades"><caption class="visually-hidden">Predicted strikes by facade</caption></table></div>
+    </section>
+
+    <section class="panel">
+      <h2>The riskiest panes</h2>
+      <div class="table-wrap"><table id="top"><caption class="visually-hidden">The ten panes with the most predicted strikes</caption></table></div>
+    </section>
