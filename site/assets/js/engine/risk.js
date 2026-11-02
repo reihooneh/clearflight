@@ -26,7 +26,7 @@ export function fresnel(cos, r0) {
  * tens for a low-rise or a high-rise near trees). Results are best read as relative: which
  * panes, and how much a plan helps.
  */
-export const STRIKE_SCALE = 0.004;
+export const STRIKE_SCALE = 0.003;
 /** Probability that a bird meeting a pane at this angle, seeing this much "open space", hits it. */
 export function strikeChance(cos, open) {
     return STRIKE_SCALE * Math.min(1, Math.max(0, open)) * (0.4 + 0.6 * Math.min(1, Math.max(0, cos)));
@@ -185,12 +185,23 @@ export function simulate(scene, sampleSize = 80) {
         }
         return weights.length - 1;
     };
+    // Where a flight starts or ends: in a tree crown (most often), low over open ground where
+    // birds forage among shrubs and lawn, or at the edge of the site (birds passing through).
     const endpoint = (avoid) => {
-        if (scene.trees.length && r() < 0.7) {
+        const u = r();
+        if (scene.trees.length && u < 0.6) {
             let i = pickTree();
             if (i === avoid && scene.trees.length > 1)
                 i = (i + 1) % scene.trees.length;
             return [pointInCrown(scene.trees[i], r), i];
+        }
+        if (u < 0.8) {
+            for (let tries = 0; tries < 20; tries++) {
+                const p = [r() * scene.width, r() * scene.depth, 0.5 + r() * 2.5];
+                const inside = scene.buildings.some((b) => p[0] > b.x && p[0] < b.x + b.width && p[1] > b.y && p[1] < b.y + b.depth);
+                if (!inside)
+                    return [p, -1];
+            }
         }
         return [pointOnEdge(scene, r, top), -1];
     };

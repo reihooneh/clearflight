@@ -119,10 +119,14 @@ test('mirror glass, nearby trees and see-through floors all raise the risk', () 
   const clear = simulate(checkScene(base)).perYear;
   const mirror = simulate(checkScene({ ...base, buildings: [{ ...base.buildings[0], all: { glazing: 0.8, glass: 'mirror' } }] })).perYear;
   const open = simulate(checkScene({ ...base, buildings: [{ ...base.buildings[0], seeThrough: [1] }] })).perYear;
-  const bare = simulate(checkScene({ ...base, trees: [] })).perYear;
+  // Without trees fewer flights cross near the glass, so compare the chance per meeting:
+  // glass that reflects trees is more dangerous than glass that reflects sky and ground.
+  const per = (res) => res.perYear / res.metGlass;
+  const withTrees = per(simulate(checkScene(base)));
+  const bare = per(simulate(checkScene({ ...base, trees: [] })));
   assert.ok(mirror > clear * 1.5, `mirror ${mirror} vs clear ${clear}`);
   assert.ok(open > clear, `see-through ${open} vs ${clear}`);
-  assert.ok(bare < clear, `no trees ${bare} vs ${clear}`);
+  assert.ok(bare < withTrees, `per meeting: no trees ${bare} vs ${withTrees}`);
 });
 
 test('markers already on the glass cut that glass\'s strikes by the marker factor', () => {
@@ -197,7 +201,10 @@ test('the plan never does worse than riskiest-first, and often better', () => {
 });
 
 test('the guideline plan treats every pane below 16 m from the outside', () => {
-  const a = analyse(scene('glass-tower'));
+  const tower = analyse(scene('glass-tower'));
+  const tg = guidelinePlan(tower.planner);
+  assert.equal(tg.choices.length, tower.risk.panes.filter((p) => p.bottom < 16).length);
+  const a = analyse(scene('riverside-library'));
   const g = guidelinePlan(a.planner);
   const low = a.risk.panes.filter((p) => p.bottom < 16 && p.treated !== 'exterior');
   assert.equal(g.choices.length, low.length);
